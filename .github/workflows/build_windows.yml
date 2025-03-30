@@ -11,8 +11,13 @@ jobs:
     runs-on: windows-latest
     
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
     
+    - name: List files in repository
+      run: |
+        dir
+        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -26,7 +31,7 @@ jobs:
     
     - name: Build with PyInstaller
       run: |
-        pyinstaller --name=literature_analysis `
+              pyinstaller --name=literature_analysis `
                    --onefile `
                    --noconsole `
                    --add-data "README.md;." `
@@ -36,20 +41,16 @@ jobs:
                    --hidden-import matplotlib `
                    --hidden-import reportlab `
                    --hidden-import dashscope `
-                   main.py
+                   main.py  
     
-    - name: Create Release ZIP
+    - name: List generated files
       run: |
-        mkdir release
-        Copy-Item "dist\literature_analysis.exe" -Destination "release\"
-        Copy-Item "README.md" -Destination "release\"
-        Copy-Item "config.json.example" -Destination "release\"
-        Compress-Archive -Path release\* -DestinationPath literature_analysis_windows.zip
+        dir dist
     
     - name: Create Release
       uses: softprops/action-gh-release@v1
       if: startsWith(github.ref, 'refs/tags/')
       with:
-        files: literature_analysis_windows.zip
+        files: dist/literature_analysis.exe
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
