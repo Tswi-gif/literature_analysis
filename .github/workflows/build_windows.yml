@@ -68,5 +68,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: literature_analysis_windows
-        path: release_package/*
+        path: release_package
         retention-days: 365
