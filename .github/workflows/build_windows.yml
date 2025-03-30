@@ -13,6 +13,24 @@ jobs:
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
+    - name: Create necessary files
+      run: |
+        # 创建示例配置文件
+        echo {
+          "ncbi_key": "your_ncbi_key_here",
+          "dashscope_key": "your_dashscope_key_here",
+          "search_term": "example search term",
+          "retmax": "20"
+        } > config.json.example
+        
+        # 创建 README 如果不存在
+        if not exist README.md (
+          echo # Literature Analysis Tool > README.md
+          echo A tool for analyzing scientific literature >> README.md
+        )
+        
+        # 显示创建的文件
+        dir
     
     - name: List files in repository
       run: |
