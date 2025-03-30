@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.spec
+
+# 敏感信息
+.pypirc
+*.key
+.env
+config.json
+credentials.json
+
+# 大文件
+*.exe
+*.zip
+
+# 其他
+.DS_Store
