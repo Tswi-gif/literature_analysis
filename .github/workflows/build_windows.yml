@@ -35,10 +35,6 @@ jobs:
         dir
         type config.json.example
     
-    - name: List files in repository
-      run: |
-        dir
-        
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
@@ -51,28 +47,29 @@ jobs:
         pip install pandas numpy matplotlib reportlab dashscope
     
     - name: Build with PyInstaller
+      shell: cmd
       run: |
-        pyinstaller --name=literature_analysis `
-                    --onefile `
-                    --noconsole `
-                    --add-data "README.md;." `
-                    --add-data "config.json.example;." `
-                    --hidden-import pandas `
-                    --hidden-import numpy `
-                    --hidden-import matplotlib `
-                    --hidden-import reportlab `
-                    --hidden-import dashscope `
-                    literature_analysis/main.py  
-    
-    - name: List generated files
-      run: |
+        dir
+        pyinstaller --name=literature_analysis ^
+                   --onefile ^
+                   --noconsole ^
+                   --add-data "README.md;." ^
+                   --add-data "config.json.example;." ^
+                   --hidden-import pandas ^
+                   --hidden-import numpy ^
+                   --hidden-import matplotlib ^
+                   --hidden-import reportlab ^
+                   --hidden-import dashscope ^
+                   literature_analysis/main.py
+        
+        rem 检查构建结果
         dir dist
     
     - name: Upload Artifact
-      uses: docker://ghcr.io/actions/upload-artifact:v3
+      uses: actions/upload-artifact@v3
       with:
         name: literature-analysis-build
-        path: dist/
+        path: dist/literature_analysis.exe
     
     - name: Create Release
       uses: softprops/action-gh-release@v1
