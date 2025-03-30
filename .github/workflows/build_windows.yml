@@ -41,7 +41,7 @@ jobs:
                    --hidden-import matplotlib `
                    --hidden-import reportlab `
                    --hidden-import dashscope `
-                   main.py  
+                   literature_analysis/main.py  
     
     - name: List generated files
       run: |
